@@ -1,0 +1,14 @@
+map : (a -> b) -> List a -> List b
+map f xs =
+  case xs @ 1
+    None => []
+    Any => [f (xs @ 1), ...map f (xs @ from 2)]
+
+filter : (a -> Boolean) -> List a -> List a
+filter f xs =
+  let
+    x = xs @ 1
+  in
+    if
+    then
+    else
