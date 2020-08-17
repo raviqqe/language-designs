@@ -43,7 +43,7 @@ default
   qux()
 ```
 
-### Special statements
+### Jump statements
 
 ```
 break
