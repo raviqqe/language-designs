@@ -26,7 +26,7 @@ for i in range(0, 42)
 
 ```
 for foo
-  bar
+  bar()
 ```
 
 ## Switch statement
@@ -52,7 +52,7 @@ continue
 
 ```
 func foo()
-  foo
+  bar()
 ```
 
 ## Variable definition
@@ -68,4 +68,10 @@ export func foo() String
   return "foo"
 
 export var bar String = "bar"
+```
+
+## Import statement
+
+```
+import "github.com/foo/bar"
 ```
