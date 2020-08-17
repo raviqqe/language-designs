@@ -89,3 +89,12 @@ var Bar Number = 42
 ```
 import "github.com/foo/bar"
 ```
+
+## Error handling
+
+- `?` operator
+
+```
+func foo() None | Error
+  bar()?
+```
