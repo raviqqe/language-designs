@@ -73,13 +73,15 @@ func foo(x Number)
 var foo String = "foo"
 ```
 
-## Export annotation
+## Exporting names
+
+- By capitalization
 
 ```
-export func foo() String
+func Foo() String
   return "foo"
 
-export var bar String = "bar"
+var Bar String = "bar"
 ```
 
 ## Import statement
