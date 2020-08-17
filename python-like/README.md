@@ -1,5 +1,7 @@
 # Python-like language
 
+- [Type system](type_system.md)
+
 ## If statement
 
 ```
