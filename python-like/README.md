@@ -31,6 +31,8 @@ for foo
 
 ## Switch statement
 
+- Type switch
+
 ```
 switch foo
 case String
