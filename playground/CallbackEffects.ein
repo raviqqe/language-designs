@@ -1,0 +1,25 @@
+main : List String -> None | Error
+main arguments =
+  do
+    content = readFile path
+    result = ! writeFile otherPath content
+  in
+    result
+
+type WriteFile {
+  path : String,
+  content : String,
+  continuation : None | Error -> None | Error
+}
+
+writeFile path content =
+  WriteFile { path, content, continuation }
+
+type ReadFile {
+  path : String,
+  content : String,
+  continuation : None | Error -> None | Error
+}
+
+readFile path content =
+  ReadFile { path, content, continuation }

@@ -1,0 +1,166 @@
+export { info }
+
+import "github.com/ein-lang/std/Number"
+import "github.com/ein-lang/std/Os"
+import "github.com/ein-lang/std/Os/Fake"
+
+type Os {
+  print : String -> None | Error,
+}
+
+type Logger {
+  info : String -> None | Error,
+}
+
+info : String -> List Os -> None | Error
+info message =
+  do
+    result = Os.print message
+  in
+    result
+
+info : String -> List Os -> None | Error
+info message osList =
+  let
+    result = Os.print (osList @ 1) message
+  in
+    result
+
+testInfo : None | Error
+testInfo = info "foo" (Effect.fromList [Fake.print "foo"])
+
+fakeInfo : String -> String -> None | Error
+fakeInfo expectedMessage message =
+  if expectedMessage == message
+  then None
+  else error "Oh, no!"
+
+printNumber : Number -> Effect -> None | Error
+printNumber number =
+  do
+    result = info (Number.toString number)
+  in
+    result
+
+testPrintNumber : None | Error
+testPrintNumber =
+  printNumber
+    42
+    (Effect.fromList [fakeInfo "42"])
+
+ossToLoggers : List Os -> List Logger
+ossToLoggers oss =
+  [
+    Logger {
+      info :
+        do
+          result = Os.print message
+        in
+          result
+    },
+    ossToLoggers (oss @ from 2)
+  ]
+
+osToLogger : Os -> Logger
+osToLogger os =
+  Logger {
+    info =
+      \message ->
+        with os in
+          do print message,
+    warn =
+      \message ->
+        with os in
+          do print message,
+  }
+
+
+# Just this...?
+
+type Logger {
+  os : Os,
+}
+
+info : String -> Logger -> None | Error
+info message logger =
+  with Logger.os logger in
+    do print message
+
+warn : String -> Logger -> None | Error
+warn message logger =
+  with Logger.os logger in
+    do print message
+
+fromOs : Os -> Logger
+fromOs os =
+  Logger { os }
+
+# Just this...? (interface based)
+
+type Logger {
+  info : String -> None | Error,
+  warn : String -> None | Error,
+  next : Number -> Logger
+}
+
+info : String -> Logger -> None | Error
+info message logger = Logger.info logger message
+
+warn : String -> Logger -> None | Error
+warn message logger = Logger.warn logger message
+
+fromOs : Os -> Logger
+fromOs os =
+  Logger {
+    info = with os in do print message,
+    warn = with os in do print message,
+    next = \id -> Logger { os = Os.next os id },
+  }
+
+next : Logger -> Number -> Logger
+next = Logger.next
+
+# Mutable effect types
+
+type Logger {
+  info : String -> None | Error,
+  warn : String -> None | Error,
+}
+
+info : Logger -> String -> None | Error
+info = Logger.info
+
+# info : Logger -> String -> (Logger, None | Error)
+# info : Logger -> String -> (Logger, None | Error)
+
+warn : Logger -> String -> None | Error
+warn = Logger.warn
+
+fromOs : Os -> Logger
+fromOs os =
+  Logger {
+    info = Os.print os,
+    warn = Os.print os,
+  }
+
+State.get : State -> Any
+State.set : State -> Any -> None
+
+fromState : State -> Logger
+fromState state =
+  Logger {
+    info :
+      \message ->
+        let?
+          messages = State.get state as List String
+          _ = State.set? state [...messages, message]
+        in
+          None,
+    warn :
+      \message ->
+        let?
+          messages = State.get state as List String
+          _ = State.set? state [...messages, message]
+        in
+          None,
+  }

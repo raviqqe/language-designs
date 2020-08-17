@@ -1,0 +1,24 @@
+calculateSomething : Number -> Number -> Logger -> Number
+calculateSomething a b logger =
+  with logger in
+    let
+      _ = do Logger.info (Number.toString a)
+      _ = do Logger.info (Number.toString b)
+    in
+      a + b
+
+calculateSomething : Number -> Number -> Logger -> Number
+calculateSomething a b logger =
+    let?
+      _ : None | Error
+      _ = Logger.info logger (Number.toString a)
+      _ : None | Error
+      _ = Logger.info logger (Number.toString b)
+    in
+      a + b
+
+func main() {
+  var foo = 42
+
+  return None
+}

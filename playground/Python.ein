@@ -1,0 +1,21 @@
+import "github.com"
+
+export func main() None | Error
+  var foo = None
+
+  switch foo
+  case None
+  default
+    return error("unexpected type")
+
+  return NOne
+
+export var foo = 42
+
+export func map(xs []number) []number
+  var ys = []
+
+  for x in xs
+    ys = [...ys, x]
+
+  return ys

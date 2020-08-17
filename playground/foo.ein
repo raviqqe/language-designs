@@ -1,0 +1,41 @@
+import "github.com/ein-lang/std/Range"
+
+# Do notations
+
+printMany : List String -> Effect -> None | Error
+printMany strings =
+  do
+    _ = print (strings @ 1)
+    result = printMany (strings @ Range.from 1)
+  in
+    result
+
+printMany : List String -> Effect -> None | Error
+printMany strings =
+  do print (strings @ 1)
+  do printMany (strings @ Range.from 1)
+
+# Do annotations
+
+printMany : Effect -> List String -> None | Error
+printMany effect strings =
+  let
+    _ = do print (strings @ 1)
+  in
+    do printMany (strings @ Range.from 1)
+
+printMany : Effect -> List String -> None | Error
+printMany strings =
+  do print (strings @ 1);
+  do printMany (strings @ Range.from 1)
+
+main : Effect -> None | Error
+main =
+  do arguments = Effect.getArguments
+  do printMany arguments
+
+func main() None | Error {
+  for argument in Effect.getArguments() {
+    print!(argument)
+  }
+}

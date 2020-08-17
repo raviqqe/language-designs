@@ -1,0 +1,18 @@
+export { select }
+
+import "github.com/ein-lang/std/FileSystem"
+import "github.com/ein-lang/std/StringMap"
+import "github.com/ein-lang/sqlite/SQLite"
+
+type StringMap = StringMap.StringMap
+
+type Database {
+  effect : Effect
+}
+
+select : String -> String -> List Database -> List StringMap | Error
+select filename query =
+  do databases
+    if FileSystem.exist! filename
+    then SQLite.select filename query
+    else error "Oh my database!"

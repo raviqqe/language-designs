@@ -1,0 +1,36 @@
+export { info }
+
+import "github.com/ein-lang/std/Number"
+import "github.com/ein-lang/std/Os"
+import "github.com/ein-lang/std/Os/Fake"
+
+# Os.print : String -> Effect -> None | Error
+
+info : String -> Effect -> None | Error
+info message =
+  do
+    result = Os.print message
+  in
+    result
+
+testInfo : None | Error
+testInfo = info "foo" (Effect.fromList [Fake.print "foo"])
+
+fakeInfo : String -> String -> None | Error
+fakeInfo expectedMessage message =
+  if expectedMessage == message
+  then None
+  else error "Oh, no!"
+
+printNumber : Number -> Effect -> None | Error
+printNumber number =
+  do
+    result = info (Number.toString number)
+  in
+    result
+
+testPrintNumber : None | Error
+testPrintNumber =
+  printNumber
+    42
+    (Effect.fromList [fakeInfo "42"])

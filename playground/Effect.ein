@@ -1,0 +1,17 @@
+effect Logger {
+  os
+}
+
+info : Logger -> String -> None | Error
+info logger message = os
+
+fromOs : Os -> Logger
+fromOs os =
+  Logger {
+    info = with os in do print message,
+    warn = with os in do print message,
+    next = \id -> Logger { os = Os.next os id },
+  }
+
+next : Logger -> Number -> Number
+next = Logger.next
