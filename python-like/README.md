@@ -53,8 +53,18 @@ continue
 ## Function definition
 
 ```
-func foo()
+func foo(x Number)
   bar()
+```
+
+### Closure definition
+
+```
+func foo(x Number)
+  func bar()
+    return x
+
+  return bar
 ```
 
 ## Variable definition
