@@ -94,7 +94,7 @@ type Error {
 ## Type coercion
 
 ```
-x as Number # Number | Error
+x.(Number) # Number | Error
 ```
 
 ## Type alias
