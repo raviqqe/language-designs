@@ -70,7 +70,7 @@ func foo(x Number)
 ## Variable definition
 
 ```
-var foo String = "foo"
+var foo Number = 42
 ```
 
 ## Exporting names
@@ -81,7 +81,7 @@ var foo String = "foo"
 func Foo() String
   return "foo"
 
-var Bar String = "bar"
+var Bar Number = 42
 ```
 
 ## Import statement
