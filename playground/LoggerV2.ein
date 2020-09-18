@@ -153,14 +153,14 @@ fromState state =
       \message ->
         let?
           messages = State.get state as List String
-          _ = State.set? state [...messages, message]
+          _ = ? State.set state [ ...messages, message ]
         in
           None,
     warn :
       \message ->
         let?
           messages = State.get state as List String
-          _ = State.set? state [...messages, message]
+          _ = ? State.set state [ ...messages, message ]
         in
           None,
   }
