@@ -1,0 +1,35 @@
+foo : Number -> Number
+fooCps : Number -> (Number -> void) -> void
+
+map : (Number -> Number) -> List Number -> List Number
+mapCps :
+  (Number -> (Number -> void) -> void) ->
+  List Number ->
+  (List Number -> void) ->
+  void
+
+map xs =
+  case xs
+    [] => []
+    [ x, ...xs ] => [ f x, ...(map xs) ]
+
+map xs =
+  case xs
+    [] => []
+    [ x, ...xs ] => [ ! f x, ...(! map xs) ]
+
+map xs =
+  case xs
+    [] => []
+    [ x, ...xs ] => try [ ! f x, ...(! map xs) ]
+
+map xs =
+  case xs
+    [] => []
+    [ x, ...xs ] =>
+      case y = f x
+        Error => y
+        Number =>
+          case ys = map xs
+            Error => ys
+            Number => [ y, ...ys ]
