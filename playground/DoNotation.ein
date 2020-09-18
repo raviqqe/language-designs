@@ -1,0 +1,29 @@
+doSomething : List Os -> None | Error
+doSomething oss =
+  do oss
+		content = os.readFile "foo"
+		result = os.writeFile "bar" content
+	in
+	  result
+
+ossToLoggers : List Os -> List Logger
+ossToLoggers oss =
+  let
+	  oss = List.split oss
+	in
+		[
+			Logger {
+				info =
+					do oss @ 1
+						result = Os.print message
+					in
+						result,
+				warn =
+					do oss @ 2
+						result = Os.print message
+						result = Os.print message
+					in
+						result,
+			},
+			...(ossToLoggers (oss @ 3))
+		]
