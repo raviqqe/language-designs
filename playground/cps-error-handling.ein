@@ -8,28 +8,28 @@ mapCps :
   (List Number -> void) ->
   void
 
-map xs =
+map f xs =
   case xs
     [] => []
-    [ x, ...xs ] => [ f x, ...(map xs) ]
+    [ x, ...xs ] => [ f x, ...(map f xs) ]
 
-map xs =
+map f xs =
   case xs
     [] => []
-    [ x, ...xs ] => [ ! f x, ...(! map xs) ]
+    [ x, ...xs ] => [ ! f x, ...(! map f xs) ]
 
-map xs =
+map f xs =
   case xs
     [] => []
-    [ x, ...xs ] => try [ ! f x, ...(! map xs) ]
+    [ x, ...xs ] => try [ ! f x, ...(! map f xs) ]
 
-map xs =
+map f xs =
   case xs
     [] => []
     [ x, ...xs ] =>
       case y = f x
         Error => y
         Number =>
-          case ys = map xs
+          case ys = map f xs
             Error => ys
             Number => [ y, ...ys ]
