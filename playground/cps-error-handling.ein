@@ -33,3 +33,13 @@ map f xs =
           case ys = map f xs
             Error => ys
             Number => [ y, ...ys ]
+
+map f xs =
+  case xs
+    [] => []
+    [ x, ...xs ] =>
+      let
+        y ?= f x
+        ys ?= map f xs
+      in
+        [ y, ...ys ]
